@@ -1,16 +1,16 @@
-//! This is where we put the documentation for our crate.
-//! You can find this text in `src/main.rs`.
+mod to_do;
 
-/// This text serves as documentation for the `myfunc` function.
-///
-/// # Examples
-/// ```
-///     assert_eq!(myfunc(), false)
-/// ```
-pub fn myfunc() -> bool {
-    true
-}
+use to_do::structs::traits::create::Create;
+use to_do::to_do_factory;
+use to_do::ItemTypes;
 
 fn main() {
-    myfunc();
+    let to_do_item: Result<ItemTypes, &'static str> = to_do_factory("pending", "buy milk");
+    match to_do_item.unwrap() {
+        ItemTypes::Pending(item) => item.create(&item.super_struct.title),
+        ItemTypes::Done(item) => println!(
+            "it's a done item with the title: {}",
+            item.super_struct.title
+        ),
+    }
 }
